@@ -25,8 +25,8 @@ module.exports = {
         use: ['thread-loader', 'babel-loader'],
       },
       {
+        test: /\.(css)$/i, //匹配所有的 css 文件
         include: [path.resolve(__dirname, '../src')],
-        test: /.css$/, //匹配 css文件
         use: [
           isDev ? 'style-loader' : MiniCssExtractPlugin.loader, // 开发环境使用style-looader,打包模式抽离css
           'css-loader',
@@ -34,11 +34,16 @@ module.exports = {
         ]
       },
       {
-        test: /.less$/, //匹配所有的 less 文件
+        test: /\.(less)$/i, //匹配所有的 less 文件
         include: [path.resolve(__dirname, '../src')],
         use: [
           isDev ? 'style-loader' : MiniCssExtractPlugin.loader, // 开发环境使用style-looader,打包模式抽离css
-          'css-loader',
+          {
+            loader:'css-loader',
+            options:{
+              importLoaders: 2,
+            }
+          },
           'postcss-loader',
           'less-loader',
           {
@@ -47,6 +52,21 @@ module.exports = {
               patterns: [path.resolve(__dirname, '../src/theme/global.less')]
             }
           }
+        ]
+      },
+      {
+        test: /\.(scss|sass)$/i, //匹配所有的 sass 文件
+        include: [path.resolve(__dirname, '../src')],
+        use: [
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader, // 开发环境使用style-looader,打包模式抽离css
+          {
+            loader:'css-loader',
+            options:{
+              importLoaders: 2,
+            }
+          },
+          'postcss-loader',
+          'sass-loader',
         ]
       },
       {
