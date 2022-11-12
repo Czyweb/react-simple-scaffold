@@ -40,17 +40,13 @@ module.exports = {
           isDev ? 'style-loader' : MiniCssExtractPlugin.loader, // 开发环境使用style-looader,打包模式抽离css
           'css-loader',
           'postcss-loader',
-          'less-loader'
-        ]
-      },
-      {
-        include: [path.resolve(__dirname, '../src')],
-        test: /.(scss|sass)$/, //匹配 scss 文件
-        use: [
-          isDev ? 'style-loader' : MiniCssExtractPlugin.loader, // 开发环境使用style-looader,打包模式抽离css
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
+          'less-loader',
+          {
+            loader: "style-resources-loader",
+            options: {
+              patterns: [path.resolve(__dirname, '../src/theme/global.less')]
+            }
+          }
         ]
       },
       {

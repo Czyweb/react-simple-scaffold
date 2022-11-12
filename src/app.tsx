@@ -1,5 +1,5 @@
 import React from 'react'
-import './app.scss'
+import './app.less'
 
 function App() {
   return <h2 className='app'>1111</h2>
